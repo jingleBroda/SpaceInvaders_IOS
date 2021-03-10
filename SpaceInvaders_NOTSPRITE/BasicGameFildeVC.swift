@@ -13,6 +13,7 @@ class BasicGameFildeVC: ViewController {
     //________________var_____________________
     @IBOutlet weak var RightButtonOP: UIButton! //свойства правой кнопки
     @IBOutlet weak var LeftButtonOP: UIButton! //свойства левой кнопки
+    @IBOutlet weak var HeathPoints: UILabel! // число жизней
     @IBOutlet weak var PlayerShip: UIImageView! //картинка корабля игрока
     @IBOutlet weak var ScoreLabel: UILabel!
     
@@ -32,6 +33,7 @@ class BasicGameFildeVC: ViewController {
     var statusTimer=false //статус(флаг) таймера: false- выкл. true-вкл
     var EnemyDestroy=false //статус удаления картинки вражеского корабля
     var scoreDiesEnemy=0 //счет убийств противников
+    var SurvivingEnemyShips=0 //счет сбежавших кораблей
     //________________________________________
     
     override func viewDidLoad() {
@@ -49,6 +51,10 @@ class BasicGameFildeVC: ViewController {
         EnemyShipGenerate = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(EnemyShipDraw), userInfo: nil, repeats: true)
         //движение вражеских кораблей
         EnemyShipMove = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(TimerALLEnemyShipMove), userInfo: nil, repeats: true)
+        
+        //self.view.bringSubviewToFront(RightButtonOP)
+        //self.view.bringSubviewToFront(LeftButtonOP)
+        
     
     }
     
@@ -225,7 +231,6 @@ class BasicGameFildeVC: ViewController {
             SingleEnemy.image = ImageEnemyShip
             MassivEnemyShip.append(SingleEnemy)
             view.addSubview(MassivEnemyShip[numberEnemy])
-        
             numberEnemy=numberEnemy+1
         }
             //if  numberEnemy==15{
@@ -239,9 +244,13 @@ class BasicGameFildeVC: ViewController {
     //движение вражеских кораблей
     func SingleMoveEnemyShip(a:UIImageView){
        a.center=CGPoint(x: a.frame.midX, y: a.frame.midY+2)
-        if a.frame.midY>=890 {
+        //self.view.bringSubviewToFront(a)
+        self.view.sendSubviewToBack(a)
+        if a.frame.midY>=RightButtonOP.frame.midY {
             a.removeFromSuperview()
             t_enemy=true
+            SurvivingEnemyShips=SurvivingEnemyShips+1
+            HeathPoints.text="Missed:\(SurvivingEnemyShips)"
         }
         
     }
@@ -264,7 +273,7 @@ class BasicGameFildeVC: ViewController {
     //
     //проверка на конец игры
     @objc func TimerGameOver(){
-        if scoreDiesEnemy>=15{
+        if SurvivingEnemyShips>=3{
             print("GG!")
             //остановка таймера
             timer?.invalidate()
@@ -273,7 +282,7 @@ class BasicGameFildeVC: ViewController {
             EnemyShipGenerate?.invalidate()
             GameOver?.invalidate()
             //выход в главное меню
-            let someVC=self.storyboard?.instantiateViewController(withIdentifier: "MainVC")
+            let someVC=self.storyboard?.instantiateViewController(withIdentifier: "GGVC")
             show(someVC!, sender: self)
         }
     }

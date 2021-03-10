@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		508BBE0D25EE76E50059ED01 /* TutorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508BBE0C25EE76E50059ED01 /* TutorViewController.swift */; };
+		50CE5C0C25F756E400125F8D /* GameOverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE5C0B25F756E400125F8D /* GameOverVC.swift */; };
 		50E7185825EE558200DC9D44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7185725EE558200DC9D44 /* AppDelegate.swift */; };
 		50E7185A25EE558200DC9D44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7185925EE558200DC9D44 /* ViewController.swift */; };
 		50E7185D25EE558200DC9D44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E7185B25EE558200DC9D44 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		508BBE0C25EE76E50059ED01 /* TutorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorViewController.swift; sourceTree = "<group>"; };
+		50CE5C0B25F756E400125F8D /* GameOverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverVC.swift; sourceTree = "<group>"; };
 		50E7185425EE558200DC9D44 /* SpaceInvaders_NOTSPRITE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceInvaders_NOTSPRITE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E7185725EE558200DC9D44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50E7185925EE558200DC9D44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				50E7185925EE558200DC9D44 /* ViewController.swift */,
 				508BBE0C25EE76E50059ED01 /* TutorViewController.swift */,
 				50FCCE6125EFD23A00A1A924 /* BasicGameFildeVC.swift */,
+				50CE5C0B25F756E400125F8D /* GameOverVC.swift */,
 				50E7185B25EE558200DC9D44 /* Main.storyboard */,
 				50E7185E25EE558500DC9D44 /* Assets.xcassets */,
 				50E7186025EE558500DC9D44 /* LaunchScreen.storyboard */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50CE5C0C25F756E400125F8D /* GameOverVC.swift in Sources */,
 				50E7185A25EE558200DC9D44 /* ViewController.swift in Sources */,
 				508BBE0D25EE76E50059ED01 /* TutorViewController.swift in Sources */,
 				50FCCE6225EFD23A00A1A924 /* BasicGameFildeVC.swift in Sources */,
