@@ -15,7 +15,7 @@ class BasicGameFildeVC: ViewController {
     @IBOutlet weak var LeftButtonOP: UIButton! //свойства левой кнопки
     @IBOutlet weak var HeathPoints: UILabel! // число жизней
     @IBOutlet weak var PlayerShip: UIImageView! //картинка корабля игрока
-    @IBOutlet weak var ScoreLabel: UILabel!
+    @IBOutlet weak var ScoreLabel: UILabel! //число сбитых кораблей
     
     var timer:Timer? //таймер для перемещения корабля игорока
     var Bullettimer:Timer? //таймер для обработки полета снарядов
@@ -34,11 +34,21 @@ class BasicGameFildeVC: ViewController {
     var EnemyDestroy=false //статус удаления картинки вражеского корабля
     var scoreDiesEnemy=0 //счет убийств противников
     var SurvivingEnemyShips=0 //счет сбежавших кораблей
+    
+    //инициализируем UserDefaults для сохранения промежуточного счета игрока
+    var demoUserScore=UserDefaults()
+    
     //________________________________________
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "background")!))
+        //установка размера корабля
+        PlayerShip.frame.size.width = self.view.frame.size.width/5
+        PlayerShip.frame.size.height = self.view.frame.size.width/5
+        PlayerShip.center = CGPoint(x: self.view.frame.size.width/2, y: (self.view.frame.size.height-80)-PlayerShip.frame.size.width/2)
+        
+        
         //обработка левой и правой кнопок
         LeftButtonOP.addTarget(self, action: #selector(buttonDownLeft), for: .touchDown)
         LeftButtonOP.addTarget(self, action: #selector(buttonUpLeft), for: [.touchUpInside, .touchUpOutside])
@@ -149,7 +159,7 @@ class BasicGameFildeVC: ViewController {
         }
         
         if t==false{
-            if a.frame.midY<=100 {
+            if a.frame.midY<=0 {
                 a.removeFromSuperview()
                 t=true
             }
@@ -221,13 +231,12 @@ class BasicGameFildeVC: ViewController {
             //let randomSpawnDote = Int.random(in: Int(35)..<Int(rightLimit)) //генерация случайной координаты появления
             
             //формирование массива враж кораблей
-            // конструкция появления снаряда РАБОТАЕТ!!!!
             let ImageEnemyShip = UIImage(named: "enemy")
             let SingleEnemy:UIImageView = UIImageView()
             
             SingleEnemy.frame.size.width = 70
             SingleEnemy.frame.size.height = 70
-            SingleEnemy.center = CGPoint(x: genereteMidXEnemyShip, y: 100)
+            SingleEnemy.center = CGPoint(x: genereteMidXEnemyShip, y: 0)
             SingleEnemy.image = ImageEnemyShip
             MassivEnemyShip.append(SingleEnemy)
             view.addSubview(MassivEnemyShip[numberEnemy])
@@ -281,7 +290,9 @@ class BasicGameFildeVC: ViewController {
             EnemyShipMove?.invalidate()
             EnemyShipGenerate?.invalidate()
             GameOver?.invalidate()
-            //выход в главное меню
+            //сохранение счета(сбитых кораблей) за текущую игру
+            demoUserScore.setValue(scoreDiesEnemy, forKey: "DemoScore")
+            //выход в экран конца игры
             let someVC=self.storyboard?.instantiateViewController(withIdentifier: "GGVC")
             show(someVC!, sender: self)
         }

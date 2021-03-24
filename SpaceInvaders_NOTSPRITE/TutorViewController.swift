@@ -21,7 +21,9 @@ class TutorViewController:ViewController {
     
     @IBOutlet weak var LeftButtonOptionTutor: UIButton!
     @IBOutlet weak var PlayerShipTutor: UIImageView!
+    
     var stepTytor=0 //отслеживание числа нажатий на кнопку (счет слайдой туториала)
+    var textTutor=TextTutor()
     
     var timer:Timer?
     //____________
@@ -29,6 +31,11 @@ class TutorViewController:ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "background")!))
+        
+        //установка размера корабля
+        PlayerShipTutor.frame.size.width = self.view.frame.size.width/5
+        PlayerShipTutor.frame.size.height = self.view.frame.size.width/5
+        PlayerShipTutor.center = CGPoint(x: self.view.frame.size.width/2, y: (self.view.frame.size.height-80)-PlayerShipTutor.frame.size.width/2)
         
         LeftButtonOptionTutor.addTarget(self, action: #selector(buttonDownLeft), for: .touchDown)
         LeftButtonOptionTutor.addTarget(self, action: #selector(buttonUpLeft), for: [.touchUpInside, .touchUpOutside])
@@ -44,27 +51,34 @@ class TutorViewController:ViewController {
         switch stepTytor {
         case 1:
             InfoTutor.alpha=1
-            InfoTutor.text="Капитан, вы находитесь в учебной симуляции. В этом режиме вы изучите основные механики, которые вам могут пригодиться."
+            InfoTutor.text=textTutor.TextTutorStep1
         case 2:
-            InfoTutor.text="Внизу вы можете наблюдать ваш корабль."
+            InfoTutor.text=textTutor.TextTutorStep2
             PlayerShipTutor.alpha=1
         case 3:
-            InfoTutor.text="По бокам, находятся рычаги управления левым и правым двигателями."
+            InfoTutor.text=textTutor.TextTutorStep3
             LeftButtonOptionTutor.alpha=1
             RightButtonOptionTutor.alpha=1
         case 4:
-            InfoTutor.text="Корабль оснащен новейшим ракетным арсеналом \"Белый таракан\". Чтобы его использовать, щелкните 1 раз по кнопке FIRE"
+            InfoTutor.text=textTutor.TextTutorStep4
             //BulletTutor.alpha=1
             FireButtonOptionTutor.alpha=1
         case 5:
-            InfoTutor.text="Перед вами появился корабль противника. Чтобы уничтожить его, достаточно одного попадания ракеты. Если вы пропустите 3 вражеских корабля, игра закончится "
+            InfoTutor.text=textTutor.TextTutorStep5
             EnemyTutor.alpha=1
         case 6:
-            //InfoTutor.text="Уничтожте корабль противника и потренеруйтесь в управлении кораблем. Как во всем разбретесь,  немедленно доложите в штаб. Удачи!"
-            InfoTutor.text="На этом инсруктаж окончен, а теперь заканчивайте симуляцию и доложите в штаб о вашей готовности."
+            InfoTutor.text=textTutor.TextTutorStep6
+            //прячем все элементы обратно
+            PlayerShipTutor.alpha=0
+            LeftButtonOptionTutor.alpha=0
+            RightButtonOptionTutor.alpha=0
+            FireButtonOptionTutor.alpha=0
+            EnemyTutor.alpha=0
         case 7:
             InfoTutor.text=""
             NextStepTutorOption.setTitle("Закончить обучение", for: .normal)
+            //прячем комментарий к тутору
+            InfoTutor.alpha=0
         default:
             stepTytor=0
             NextStepTutorOption.setTitle("Начать обучение", for: .normal)
